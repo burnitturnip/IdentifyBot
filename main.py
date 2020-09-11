@@ -1,5 +1,3 @@
-#%%
-
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -16,13 +14,13 @@ import discord
 import requests
 
 dataFolder = ".\\Data"
-zones = os.listdir(dataFolder)
+classes = os.listdir(dataFolder)
 
 discordToken = open("discordToken.txt").read()
 
 batchSize = 32
-imgHeight = 200
-imgWidth = 200
+imgHeight = 180
+imgWidth = 180
 
 trainDataSet = tf.keras.preprocessing.image_dataset_from_directory(
     dataFolder,
@@ -42,19 +40,11 @@ valDataSet = tf.keras.preprocessing.image_dataset_from_directory(
 
 classNames = trainDataSet.class_names
 
-# plt.figure(figsize=(10, 10))
-# for images, labels in trainDataSet.take(1):
-#   for i in range(9):
-#     ax = plt.subplot(3, 3, i + 1)
-#     plt.imshow(images[i].numpy().astype("uint8"))
-#     plt.title(classNames[labels[i]])
-#     plt.axis("off")
-
 AUTOTUNE = tf.data.experimental.AUTOTUNE
 trainDataSet = trainDataSet.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
 valDataSet = valDataSet.cache().prefetch(buffer_size=AUTOTUNE)
 
-num_classes = len(zones)
+num_classes = len(classes)
 
 model = Sequential([
   layers.experimental.preprocessing.Rescaling(1./255, input_shape=(imgHeight, imgWidth, 3)),
@@ -119,7 +109,7 @@ async def on_message(message):
                   ".\\identifyImage.png", target_size=(imgHeight, imgWidth)
               )
               img_array = keras.preprocessing.image.img_to_array(img)
-              img_array = tf.expand_dims(img_array, 0) # Create a batch
+              img_array = tf.expand_dims(img_array, 0)
 
               predictions = model.predict(img_array)
               score = tf.nn.softmax(predictions[0])
@@ -138,4 +128,3 @@ async def on_ready():
 client.run(discordToken)
 
 # model.save(".\\")
-# %%
