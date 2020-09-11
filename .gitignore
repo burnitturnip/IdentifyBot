@@ -1,0 +1,11 @@
+zonebot.code-workspace
+Data/
+.vscode/.ropeproject/config.py
+.vscode/.ropeproject/objectdb
+saved_model.pb
+variables/variables.data-00000-of-00001
+variables/variables.index
+testImages/
+identify.py
+discordToken.txt
+identifyImage.png
