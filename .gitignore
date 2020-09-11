@@ -1,4 +1,4 @@
-zonebot.code-workspace
+identifyBot.code-workspace
 Data/
 .vscode/.ropeproject/config.py
 .vscode/.ropeproject/objectdb
@@ -9,3 +9,4 @@ testImages/
 identify.py
 discordToken.txt
 identifyImage.png
+
